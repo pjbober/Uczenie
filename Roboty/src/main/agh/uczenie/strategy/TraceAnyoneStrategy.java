@@ -6,8 +6,8 @@ import robocode.ScannedRobotEvent;
 /**
  * Created by kliput on 14.04.14.
  */
-public class TraceStrategy extends AbstractStrategy {
-	public TraceStrategy(AdvancedRobot robot) {
+public class TraceAnyoneStrategy extends BaseStrategy {
+	public TraceAnyoneStrategy(AdvancedRobot robot) {
 		super(robot);
 	}
 

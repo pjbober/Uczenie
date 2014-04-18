@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * Created by kliput on 14.04.14.
  */
-public class TraceStrategyTest {
+public class TraceAnyoneStrategyTest {
 	@Test
 	public void testOnScannedRobot() throws Exception {
 		// ...
