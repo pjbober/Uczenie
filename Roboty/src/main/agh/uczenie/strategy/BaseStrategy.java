@@ -11,7 +11,11 @@ public class BaseStrategy implements IBasicEvents {
 		this.robot = robot;
 	}
 
-	public void run() {}
+	public void _loopAction() {
+		robot.setTurnRadarLeft(360);
+		loopAction();
+		robot.execute();
+	}
 
 	public void loopAction() {}
 
