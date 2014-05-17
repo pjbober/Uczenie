@@ -3,10 +3,13 @@ package agh.uczenie.strategy;
 import robocode.*;
 import robocode.robotinterfaces.IBasicEvents;
 
+import java.awt.*;
+
 public class BaseStrategy implements IBasicEvents {
 	protected final AdvancedRobot robot;
 	private static final int PROBE_DELAY = 100;
 	private int probeCount = 0;
+	private boolean init = true;
 
 	public BaseStrategy(AdvancedRobot robot) {
 		assert robot != null;
@@ -19,13 +22,44 @@ public class BaseStrategy implements IBasicEvents {
 //			robot.turnRadarLeft(360);
 //			probeCount = 0;
 //		}
+		prepare();
 		loopAction();
 		robot.execute();
 	}
 
-	public void loopAction() {}
+	private void prepare() {
+		if (init) {
+			setupColors();
+			setup();
+			init = false;
+		}
+	}
+
+	private void setupColors() {
+		robot.setBodyColor(bodyColor());
+		robot.setGunColor(gunColor());
+		robot.setRadarColor(radarColor());
+	}
+
+	// Default colors - should be override with strategy-specific colors
+
+	public java.awt.Color bodyColor() {
+		return Color.red;
+	}
+
+	public java.awt.Color gunColor() {
+		return Color.white;
+	}
+
+	public Color radarColor() {
+		return Color.red;
+	}
+
+	// Methods to implement strategy actions
 
 	public void setup() {}
+
+	public void loopAction() {}
 
 	@Override
 	public void onStatus(StatusEvent statusEvent) {}
@@ -59,4 +93,11 @@ public class BaseStrategy implements IBasicEvents {
 
 	@Override
 	public void onWin(WinEvent winEvent) {}
+
+	// Utils
+
+	protected void calibrate() {
+		robot.turnGunRight(robot.getHeading()-robot.getGunHeading());
+		robot.turnRadarRight(robot.getGunHeading()-robot.getRadarHeading());
+	}
 }

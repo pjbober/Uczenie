@@ -7,6 +7,7 @@ import agh.uczenie.strategy.StrategyManager;
 import java.util.Random;
 
 public class RandomStrategySelect extends BaseStrategySelect {
+	private final int MAX_INVOCATIONS = 50;
 	private int invocationCount = 0;
 	private StrategyManager.Type currentType = StrategyManager.Type.DEFAULT;
 	private Random random = new Random();
@@ -17,7 +18,7 @@ public class RandomStrategySelect extends BaseStrategySelect {
 
 	@Override
 	public BaseStrategy basedOnState(State state) {
-		if (invocationCount++ > 100) {
+		if (invocationCount++ > MAX_INVOCATIONS) {
 			currentType = StrategyManager.Type.values()[random.nextInt(StrategyManager.Type.length)];
 			invocationCount = 0;
 		}

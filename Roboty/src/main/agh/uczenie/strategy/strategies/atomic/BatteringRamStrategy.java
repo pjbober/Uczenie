@@ -28,10 +28,28 @@ public class BatteringRamStrategy extends BaseStrategy {
 	}
 
 	@Override
+	public Color bodyColor() {
+		return Color.lightGray;
+	}
+
+	@Override
+	public Color gunColor() {
+		return Color.blue;
+	}
+
+	@Override
+	public Color radarColor() {
+		return Color.lightGray;
+	}
+
+	@Override
 	public void setup() {
-		robot.setBodyColor(Color.lightGray);
-		robot.setGunColor(Color.gray);
-		robot.setRadarColor(Color.darkGray);
+		super.setup();
+
+		robot.setAdjustGunForRobotTurn(false);
+		robot.setAdjustRadarForGunTurn(false);
+
+		calibrate();
 	}
 
 	@Override
@@ -81,4 +99,5 @@ public class BatteringRamStrategy extends BaseStrategy {
 		robot.fire(firePower);
 		robot.ahead(40); // Ram him again!
 	}
+
 }
