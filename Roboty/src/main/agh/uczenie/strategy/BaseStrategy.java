@@ -5,19 +5,27 @@ import robocode.robotinterfaces.IBasicEvents;
 
 public class BaseStrategy implements IBasicEvents {
 	protected final AdvancedRobot robot;
+	private static final int PROBE_DELAY = 100;
+	private int probeCount = 0;
 
 	public BaseStrategy(AdvancedRobot robot) {
 		assert robot != null;
 		this.robot = robot;
 	}
 
-	public void _loopAction() {
-		robot.setTurnRadarLeft(360);
+	public final void _loopAction() {
+//		if (probeCount++ >= PROBE_DELAY) {
+//			System.out.println("Radar");
+//			robot.turnRadarLeft(360);
+//			probeCount = 0;
+//		}
 		loopAction();
 		robot.execute();
 	}
 
 	public void loopAction() {}
+
+	public void setup() {}
 
 	@Override
 	public void onStatus(StatusEvent statusEvent) {}

@@ -1,5 +1,6 @@
-package agh.uczenie.strategy;
+package agh.uczenie.strategy.strategies.example;
 
+import agh.uczenie.strategy.BaseStrategy;
 import robocode.AdvancedRobot;
 import robocode.ScannedRobotEvent;
 
@@ -25,7 +26,7 @@ public class HeadOnTargetingStrategy extends BaseStrategy {
 		lastTurnGunRadiansDiff = robocode.util.Utils.normalRelativeAngle(absoluteBearing-robot.getGunHeadingRadians());
 		robot.setTurnGunRightRadians(lastTurnGunRadiansDiff);
 
-		System.out.println(String.format("aimed: %d, dist/50: %d", aimed, (int)event.getDistance()/50));
+//		System.out.println(String.format("aimed: %d, dist/50: %d", aimed, (int)event.getDistance()/50));
 
 		if (lastTurnGunRadiansDiff < 0.01) {
 			if (++aimed > (int)event.getDistance() / 50) {

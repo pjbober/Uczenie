@@ -1,5 +1,6 @@
-package agh.uczenie.strategy;
+package agh.uczenie.strategy.strategies.example;
 
+import agh.uczenie.strategy.BaseStrategy;
 import robocode.AdvancedRobot;
 import robocode.HitByBulletEvent;
 

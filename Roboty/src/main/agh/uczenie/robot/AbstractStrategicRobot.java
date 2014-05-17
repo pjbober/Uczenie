@@ -27,6 +27,7 @@ public abstract class AbstractStrategicRobot extends AdvancedRobot {
 
 	@Override
 	public void run() {
+		strategy.setup();
 		while (true) {
 			strategy._loopAction();
 			strategy = strategySelect.basedOnState(stateMonitor.getState());

@@ -1,10 +1,11 @@
 package agh.uczenie.strategy;
 
 import agh.uczenie.robot.AbstractStrategicRobot;
+import agh.uczenie.strategy.strategies.atomic.BatteringRamStrategy;
 import robocode.AdvancedRobot;
 
 public class StrategyManager {
-	private static final Class<? extends BaseStrategy> DEFAULT_STRATEGY_CLASS = HeadOnTargetingStrategy.class;
+	private static final Class<? extends BaseStrategy> DEFAULT_STRATEGY_CLASS = BatteringRamStrategy.class;
 
 	private final AbstractStrategicRobot robot;
 
@@ -17,9 +18,10 @@ public class StrategyManager {
 
 	public static enum Type {
 		DEFAULT,
-		HEAD_ON_TARGETING,
-		TRACE_ANYONE,
-		RUN_FROM_BULLETS;
+		BATTERING_RAM;
+//		HEAD_ON_TARGETING,
+//		TRACE_ANYONE,
+//		RUN_FROM_BULLETS;
 
 		public static final int length;
 		static {
@@ -37,18 +39,21 @@ public class StrategyManager {
 		if (type != currentType) {
 			currentStrategy = create(type);
 			currentType = type;
+			System.out.println("Strategy changed to: " + currentType);
 		}
 		return currentStrategy;
 	}
 
 	private BaseStrategy create(Type type) {
 		switch (type) {
-			case HEAD_ON_TARGETING:
-				return new HeadOnTargetingStrategy(robot);
-			case TRACE_ANYONE:
-				return new TraceAnyoneStrategy(robot);
-			case RUN_FROM_BULLETS:
-				return new RunFromBulletsStrategy(robot);
+//			case HEAD_ON_TARGETING:
+//				return new HeadOnTargetingStrategy(robot);
+//			case TRACE_ANYONE:
+//				return new TraceAnyoneStrategy(robot);
+//			case RUN_FROM_BULLETS:
+//				return new RunFromBulletsStrategy(robot);
+			case BATTERING_RAM:
+				return new BatteringRamStrategy(robot);
 			case DEFAULT:
 			default:
 				try {
