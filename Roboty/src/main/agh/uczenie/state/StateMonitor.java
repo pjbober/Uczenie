@@ -12,7 +12,17 @@ public class StateMonitor implements IBasicEvents {
 	}
 
 	public State getState() {
-		return new State(); // TODO
+		State state = new State();
+		state.others = robot.getOthers();
+		state.energy = robot.getEnergy();
+
+		return state;
+	}
+
+	// -- Other --
+
+	public void getRobotCount() {
+
 	}
 
 	// -- Asynchronous events notification --

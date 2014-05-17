@@ -7,6 +7,8 @@ import agh.uczenie.strategy_select.BaseStrategySelect;
 import robocode.*;
 
 public abstract class AbstractStrategicRobot extends AdvancedRobot {
+	private static final int STRATEGY_CHANGE_INTERVAL = 10;
+	private int strategyChangeCounter = 0;
 
 	private BaseStrategySelect strategySelect;
 	private BaseStrategy strategy;
@@ -28,7 +30,10 @@ public abstract class AbstractStrategicRobot extends AdvancedRobot {
 	@Override
 	public void run() {
 		while (true) {
-			strategy = strategySelect.basedOnState(stateMonitor.getState());
+			if (strategyChangeCounter++ > STRATEGY_CHANGE_INTERVAL) {
+				strategy = strategySelect.basedOnState(stateMonitor.getState());
+				strategyChangeCounter = 0;
+			}
 			strategy._loopAction();
 		}
 	}

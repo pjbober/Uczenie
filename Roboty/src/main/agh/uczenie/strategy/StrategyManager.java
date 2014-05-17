@@ -5,16 +5,16 @@ import agh.uczenie.strategy.strategies.atomic.AvoidingStrategy;
 import agh.uczenie.strategy.strategies.atomic.BatteringRamStrategy;
 
 public class StrategyManager {
-	private static final Type DEFAULT_TYPE = Type.AVOIDING;
+	private static final StrategyType DEFAULT_TYPE = StrategyType.AVOIDING;
 
 	private final AbstractStrategicRobot robot;
 
-	private Type currentType;
+	private StrategyType currentType;
 	private BaseStrategy currentStrategy;
 
 	public StrategyManager(AbstractStrategicRobot robot) {
 		this.robot = robot;
-		currentType = Type.DEFAULT;
+		currentType = StrategyType.DEFAULT;
 		currentStrategy = create(currentType);
 	}
 
@@ -22,18 +22,7 @@ public class StrategyManager {
 		return currentStrategy;
 	}
 
-	public static enum Type {
-		DEFAULT,
-		BATTERING_RAM,
-		AVOIDING;
-
-		public static final int length;
-		static {
-			length = Type.values().length;
-		}
-	}
-
-	public BaseStrategy get(Type type) {
+	public BaseStrategy get(StrategyType type) {
 		if (type != currentType) {
 			currentStrategy = create(type);
 			currentType = type;
@@ -43,8 +32,8 @@ public class StrategyManager {
 		return currentStrategy;
 	}
 
-	private BaseStrategy create(Type type) {
-		if (type == Type.DEFAULT) {
+	private BaseStrategy create(StrategyType type) {
+		if (type == StrategyType.DEFAULT) {
 			type = DEFAULT_TYPE;
 		}
 
@@ -63,5 +52,9 @@ public class StrategyManager {
 		}
 
 		return strategy;
+	}
+
+	public AbstractStrategicRobot getRobot() {
+		return robot;
 	}
 }
