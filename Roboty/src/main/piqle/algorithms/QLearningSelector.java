@@ -43,7 +43,7 @@ public class QLearningSelector extends  AbstractMemorySelector{
 	private static final long serialVersionUID = 1L;
 
 	public QLearningSelector(){
-	memory=new RewardMemorizer(); 
+	memory=new RewardMemorizer();
     }
 	
 	public QLearningSelector(IDefaultValueChooser dvc){
