@@ -14,6 +14,7 @@ public class BaseStrategy implements IBasicEvents {
 	public BaseStrategy(AdvancedRobot robot) {
 		assert robot != null;
 		this.robot = robot;
+		System.out.println("Strategy constructed: " + this.getClass().getSimpleName());
 	}
 
 	public final void _loopAction() {

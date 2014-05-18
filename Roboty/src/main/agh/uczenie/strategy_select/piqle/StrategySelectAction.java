@@ -34,4 +34,9 @@ public class StrategySelectAction implements IAction {
 	public StrategyType getStrategyType() {
 		return type;
 	}
+
+	@Override
+	public String toString() {
+		return type.toString();
+	}
 }
