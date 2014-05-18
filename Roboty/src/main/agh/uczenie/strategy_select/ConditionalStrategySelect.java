@@ -1,5 +1,6 @@
 package agh.uczenie.strategy_select;
 
+import agh.uczenie.state.Energy;
 import agh.uczenie.state.State;
 import agh.uczenie.strategy.BaseStrategy;
 import agh.uczenie.strategy.StrategyManager;
@@ -59,10 +60,10 @@ public class ConditionalStrategySelect extends BaseStrategySelect {
 	@Override
 	public BaseStrategy basedOnState(State state) {
 		StrategyType strategyType;
-		if (state.others > 2) {
-			strategyType = StrategyType.BATTERING_RAM;
-		} else {
+		if (state.selfEnergy == Energy.LOW) {
 			strategyType = StrategyType.AVOIDING;
+		} else {
+			strategyType = StrategyType.BATTERING_RAM;
 		}
 		return strategyManager.get(strategyType);
 	}

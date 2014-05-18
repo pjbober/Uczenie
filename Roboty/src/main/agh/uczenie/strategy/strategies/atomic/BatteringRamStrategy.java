@@ -66,10 +66,10 @@ public class BatteringRamStrategy extends BaseStrategy {
 		clockwise = (e.getBearing() >= 0);
 
 		robot.setTurnRight(0);
-		robot.turnRight(e.getBearing());
+		robot.setTurnRight(e.getBearing());
 		robot.setAhead(0);
 		robot.setAhead(e.getDistance() + 5);
-		robot.scan(); // Might want to move ahead again!
+//		robot.scan(); // Might want to move ahead again!
 	}
 
 	/**

@@ -18,11 +18,6 @@ public class BaseStrategy implements IBasicEvents {
 	}
 
 	public final void _loopAction() {
-//		if (probeCount++ >= PROBE_DELAY) {
-//			System.out.println("Radar");
-//			robot.turnRadarLeft(360);
-//			probeCount = 0;
-//		}
 		prepare();
 		loopAction();
 		robot.execute();
