@@ -11,7 +11,6 @@ import piqle.environment.ActionList;
 import piqle.environment.IAction;
 import piqle.environment.IState;
 import robocode.DeathEvent;
-import robocode.RobocodeFileOutputStream;
 import robocode.WinEvent;
 
 import java.io.*;
@@ -41,7 +40,8 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 	public PiqleStrategySelect(StrategyManager strategyManager) {
 		super(strategyManager);
 
-		File file = getRobot().getDataFile(FILE_PATH);
+		File file = new File(FILE_PATH);
+//		File file = getRobot().getDataFile(FILE_PATH);
 		if (file.exists() && !file.isDirectory() && file.length() > 0) {
 			try {
 				System.out.println("Trying to load memory from file, length: " + file.length());
@@ -116,7 +116,7 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 	}
 
 	private ISelector loadPiqleSelector() throws IOException, ClassNotFoundException {
-		FileInputStream file = new FileInputStream(getRobot().getDataFile(FILE_PATH));
+		FileInputStream file = new FileInputStream(FILE_PATH);
 		ObjectInputStream in = new ObjectInputStream(file);
 		ISelector selector = (ISelector) in.readObject();
 		file.close();
@@ -124,7 +124,7 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 	}
 
 	private void writeMemory() throws IOException {
-		RobocodeFileOutputStream file = new RobocodeFileOutputStream(getRobot().getDataFile(FILE_PATH));
+		FileOutputStream file = new FileOutputStream(FILE_PATH);
 		ObjectOutputStream out = new ObjectOutputStream(file);
 		out.writeObject(this.piqleSelector);
 		file.close();
