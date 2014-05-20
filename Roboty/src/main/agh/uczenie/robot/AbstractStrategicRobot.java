@@ -12,7 +12,7 @@ import robocode.*;
 import java.lang.reflect.InvocationTargetException;
 
 public abstract class AbstractStrategicRobot extends AdvancedRobot {
-	private static final int STRATEGY_CHANGE_INTERVAL = 10;
+	private static final int STRATEGY_CHANGE_INTERVAL = 25;
 	private final StrategyManager strategyManager;
 	private int strategyChangeCounter = 0;
 
@@ -48,19 +48,25 @@ public abstract class AbstractStrategicRobot extends AdvancedRobot {
 	@Override
 	public void run() {
 		runInit();
+		discoverAndChangeStrategy();
 
 		while (true) {
 			if (strategyChangeCounter++ > STRATEGY_CHANGE_INTERVAL) {
-				strategy = new DiscoveryStrategy(this);
-				strategy.setup(); // should be blocking!
-
-				State state = ((DiscoveryStrategy) strategy).getState();
-				System.out.println("State: " + state.toString());
-				strategy = strategySelect.basedOnState(state);
+				discoverAndChangeStrategy();
 				strategyChangeCounter = 0;
 			}
 			strategy._loopAction();
 		}
+	}
+
+	private void discoverAndChangeStrategy() {
+		strategy = new DiscoveryStrategy(this);
+		strategy.setup(); // should be blocking!
+
+		State state = ((DiscoveryStrategy) strategy).getState();
+		System.out.println("State: " + state.toString());
+		strategy = strategySelect.basedOnState(state);
+		strategy.setup();
 	}
 
 	// -- Asynchronous events delegation --
