@@ -136,4 +136,18 @@ public abstract class AbstractStrategicRobot extends AdvancedRobot {
 		strategy.onWin(winEvent);
 		strategySelect.onWin(winEvent);
 	}
+
+	@Override
+	public void onRoundEnded(RoundEndedEvent event) {
+		super.onRoundEnded(event);
+		strategy.onRoundEnded(event);
+		strategySelect.onRoundEnded(event);
+	}
+
+	@Override
+	public void onBattleEnded(BattleEndedEvent event) {
+		super.onBattleEnded(event);
+		strategy.onBattleEnded(event);
+		strategySelect.onBattleEnded(event);
+	}
 }

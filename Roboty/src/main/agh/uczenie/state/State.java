@@ -10,25 +10,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class State implements IState {
+	public SpecialState specialState = SpecialState.NORMAL;
 	public Energy selfEnergy = Energy.HIGH;
 	public Map<Distance, Integer> enemiesCount = new HashMap<>();
 	public Map<Distance, Energy> enemiesEnergyAvg = new HashMap<>();
 
-	public State() {
+	private void init() {
 		for (Distance distance : Distance.values()) {
 			enemiesCount.put(distance, 0);
 			enemiesEnergyAvg.put(distance, Energy.ZERO);
 		}
 	}
 
+	public State() {
+		this.specialState = SpecialState.NORMAL;
+		init();
+	}
+
+	public State(SpecialState specialState) {
+		this.specialState = specialState;
+		init();
+	}
+
 	public double computeScoreTo(State currentState) {
-		return currentState.selfEnergy.getScore() - selfEnergy.getScore();
+//		return currentState.selfEnergy.getScore() - selfEnergy.getScore();
+		return 0; // currently not needed
 	}
 
 	@Override
 	public int hashCode() {
-		// self energy is assumed to be 0-999
-		return selfEnergy.getScore() + 1000*enemiesCountHash() + 10000*enemiesEnergyHash();
+		switch (specialState) {
+			default:
+			case NORMAL:
+				// self energy is assumed to be 0-999
+				return selfEnergy.getScore() + 1000*enemiesCountHash() + 10000*enemiesEnergyHash();
+			case WIN:
+				return -1;
+			case LOSE:
+				return -2;
+		}
 	}
 
 	/// Values: [0,1,2,3]+[10,11,12,13]+[20,21,22,23] -> 0..39
@@ -53,12 +73,22 @@ public class State implements IState {
 
 	@Override
 	public String toString() {
-		Map<Distance, Integer> ec = enemiesCount;
-		Map<Distance, Energy> ee = enemiesEnergyAvg;
-		return String.format("[Energy: %s, Enemies: {%d: %s| %d: %s| %d: %s}]", selfEnergy,
-				ec.get(Distance.SHORT), ee.get(Distance.SHORT),
-				ec.get(Distance.MEDIUM), ee.get(Distance.MEDIUM),
-				ec.get(Distance.LONG), ee.get(Distance.LONG));
+		switch (specialState) {
+			default:
+			case NORMAL:
+				Map<Distance, Integer> ec = enemiesCount;
+				Map<Distance, Energy> ee = enemiesEnergyAvg;
+				return String.format("[Energy: %s, Enemies: {%d: %s| %d: %s| %d: %s}]", selfEnergy,
+						ec.get(Distance.SHORT), ee.get(Distance.SHORT),
+						ec.get(Distance.MEDIUM), ee.get(Distance.MEDIUM),
+						ec.get(Distance.LONG), ee.get(Distance.LONG));
+			case WIN:
+				return "[WIN]";
+			case LOSE:
+				return "[LOSE]";
+		}
+
+
 	}
 
 	// -- IState implementation --

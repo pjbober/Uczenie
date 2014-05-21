@@ -1,5 +1,6 @@
 package agh.uczenie.strategy_select;
 
+import agh.uczenie.state.SpecialState;
 import agh.uczenie.state.State;
 import agh.uczenie.strategy.BaseStrategy;
 import agh.uczenie.strategy.StrategyManager;
@@ -10,8 +11,7 @@ import piqle.algorithms.QLearningSelector;
 import piqle.environment.ActionList;
 import piqle.environment.IAction;
 import piqle.environment.IState;
-import robocode.DeathEvent;
-import robocode.WinEvent;
+import robocode.*;
 
 import java.io.*;
 
@@ -28,6 +28,7 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 	StrategySelectAction stateTransitionAction = null;
 
 	private double reinforcementMemory = 0;
+	private double lastEnergy = 0;
 
 	static {
 		allActionsList = new IAction[StrategyType.uniqueValues().length];
@@ -53,7 +54,9 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 			System.out.println("Memory file does not exists - creating new memory");
 			piqleSelector = new QLearningSelector();
 		}
-		System.out.println("Piqle strategy select with memory: " + piqleSelector.toString());
+
+		lastEnergy = getRobot().getEnergy();
+//		System.out.println("Piqle strategy select with memory: " + piqleSelector.toString());
 	}
 
 	public ActionList createActionList(IState state) {
@@ -74,40 +77,79 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 			resetReinforcementMemory();
 			return strategyManager.get(stateTransitionAction.getStrategyType());
 		} else {
-			double reinforcement = computeReinforcement(prevState, state);
-			resetReinforcementMemory();
-
-			System.out.println(String.format("Learn: %s --[%s]--> %s (%f)",
-					prevState.toString(), stateTransitionAction, state.toString(), reinforcement));
-
-			piqleSelector.learn((IState) prevState, (IState) state, stateTransitionAction, reinforcement);
-
-			prevState = state;
+			learnAndPushState(state);
 			stateTransitionAction = (StrategySelectAction) piqleSelector.getChoice(createActionList((IState) state));
 
-			return strategyManager.get((stateTransitionAction).getStrategyType());
+			return strategyManager.get(stateTransitionAction.getStrategyType());
 		}
 	}
 
+	public void learnAndPushState(State state) {
+		double reinforcement = computeReinforcement(prevState, state);
+		resetReinforcementMemory();
+
+		System.out.println(String.format("Learn: %s --[%s]--> %s (%f)",
+				prevState.toString(), stateTransitionAction, state.toString(), reinforcement));
+
+		piqleSelector.learn((IState) prevState, (IState) state, stateTransitionAction, reinforcement);
+
+		prevState = state;
+	}
+
 	private double computeReinforcement(State prevState, State currentState) {
-		return reinforcementMemory + prevState.computeScoreTo(currentState);
+		double energyReinforcement = energyReinforcement();
+		double stateReinforcement = prevState.computeScoreTo(currentState);
+
+		System.out.println(String.format("Reinforcement: M: %.2f, E: %.2f, S: %.2f",
+				reinforcementMemory, energyReinforcement, stateReinforcement));
+
+		return reinforcementMemory + energyReinforcement + stateReinforcement;
+	}
+
+	private double energyReinforcement() {
+		return getRobot().getEnergy() - lastEnergy;
 	}
 
 	private void resetReinforcementMemory() {
 		reinforcementMemory = 0;
+		lastEnergy = getRobot().getEnergy();
 	}
 
 	@Override
 	public void onDeath(DeathEvent deathEvent) {
-		onEnd();
+		learnAndPushState(new State(SpecialState.LOSE));
 	}
 
 	@Override
 	public void onWin(WinEvent winEvent) {
-		onEnd();
+		learnAndPushState(new State(SpecialState.WIN));
 	}
 
-	public void onEnd() {
+	@Override
+	public void onBulletHit(BulletHitEvent bulletHitEvent) {
+		reinforcementMemory += bulletHitEvent.getBullet().getPower();
+	}
+
+	@Override
+	public void onBulletMissed(BulletMissedEvent bulletMissedEvent) {
+		reinforcementMemory -= bulletMissedEvent.getBullet().getPower();
+	}
+
+	@Override
+	public void onHitByBullet(HitByBulletEvent hitByBulletEvent) {
+		reinforcementMemory -= hitByBulletEvent.getBullet().getPower();
+	}
+
+	@Override
+	public void onHitWall(HitWallEvent hitWallEvent) {
+		double penalty = (Math.abs(hitWallEvent.getBearing())/180)*10.0;
+		System.out.println("Penalty for hit wall: " + penalty);
+		reinforcementMemory -= (Math.abs(hitWallEvent.getBearing())/180)*10.0;
+	}
+
+	@Override
+	public void onRoundEnded(RoundEndedEvent roundEndedEvent) {
+		super.onRoundEnded(roundEndedEvent);
 		try {
 			writeMemory();
 		} catch (IOException e) {

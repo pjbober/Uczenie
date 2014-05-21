@@ -2,10 +2,12 @@ package agh.uczenie.strategy;
 
 import robocode.*;
 import robocode.robotinterfaces.IBasicEvents;
+import robocode.robotinterfaces.IBasicEvents2;
+import robocode.robotinterfaces.IBasicEvents3;
 
 import java.awt.*;
 
-public class BaseStrategy implements IBasicEvents {
+public class BaseStrategy implements IBasicEvents, IBasicEvents2, IBasicEvents3 {
 	protected final AdvancedRobot robot;
 	private static final int PROBE_DELAY = 100;
 	private int probeCount = 0;
@@ -96,4 +98,10 @@ public class BaseStrategy implements IBasicEvents {
 		robot.turnGunRight(robot.getHeading()-robot.getGunHeading());
 		robot.turnRadarRight(robot.getGunHeading()-robot.getRadarHeading());
 	}
+
+	@Override
+	public void onRoundEnded(RoundEndedEvent roundEndedEvent) {}
+
+	@Override
+	public void onBattleEnded(BattleEndedEvent battleEndedEvent) {}
 }

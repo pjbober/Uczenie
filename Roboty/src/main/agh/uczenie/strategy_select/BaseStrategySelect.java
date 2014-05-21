@@ -6,8 +6,10 @@ import agh.uczenie.strategy.BaseStrategy;
 import agh.uczenie.strategy.StrategyManager;
 import robocode.*;
 import robocode.robotinterfaces.IBasicEvents;
+import robocode.robotinterfaces.IBasicEvents2;
+import robocode.robotinterfaces.IBasicEvents3;
 
-public abstract class BaseStrategySelect implements IBasicEvents {
+public abstract class BaseStrategySelect implements IBasicEvents, IBasicEvents2, IBasicEvents3 {
 	protected StrategyManager strategyManager;
 
 	public BaseStrategySelect(StrategyManager strategyManager) {
@@ -54,4 +56,10 @@ public abstract class BaseStrategySelect implements IBasicEvents {
 
 	@Override
 	public void onWin(WinEvent winEvent) {}
+
+	@Override
+	public void onRoundEnded(RoundEndedEvent roundEndedEvent) {}
+
+	@Override
+	public void onBattleEnded(BattleEndedEvent battleEndedEvent) {}
 }
