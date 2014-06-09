@@ -42,11 +42,10 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 		super(strategyManager);
 
 		File file = new File(FILE_PATH);
-//		File file = getRobot().getDataFile(FILE_PATH);
 		if (file.exists() && !file.isDirectory() && file.length() > 0) {
 			try {
 				System.out.println("Trying to load memory from file, length: " + file.length());
-				piqleSelector = (QLearningSelector) loadPiqleSelector();
+				piqleSelector = (QLearningSelector) loadPiqleSelector(FILE_PATH);
 			} catch (IOException | ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}
@@ -157,8 +156,8 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 		}
 	}
 
-	private ISelector loadPiqleSelector() throws IOException, ClassNotFoundException {
-		FileInputStream file = new FileInputStream(FILE_PATH);
+	public static ISelector loadPiqleSelector(String path) throws IOException, ClassNotFoundException {
+		FileInputStream file = new FileInputStream(path);
 		ObjectInputStream in = new ObjectInputStream(file);
 		ISelector selector = (ISelector) in.readObject();
 		file.close();

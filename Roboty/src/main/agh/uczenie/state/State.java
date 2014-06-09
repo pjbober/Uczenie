@@ -78,7 +78,7 @@ public class State implements IState {
 			case NORMAL:
 				Map<Distance, Integer> ec = enemiesCount;
 				Map<Distance, Energy> ee = enemiesEnergyAvg;
-				return String.format("[Energy: %s, Enemies: {%d: %s| %d: %s| %d: %s}]", selfEnergy,
+				return String.format("%d [Energy: %s, Enemies: {%d: %s| %d: %s| %d: %s}]", hashCode(), selfEnergy,
 						ec.get(Distance.SHORT), ee.get(Distance.SHORT),
 						ec.get(Distance.MEDIUM), ee.get(Distance.MEDIUM),
 						ec.get(Distance.LONG), ee.get(Distance.LONG));
