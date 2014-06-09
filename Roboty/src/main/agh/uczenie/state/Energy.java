@@ -1,10 +1,10 @@
 package agh.uczenie.state;
 
 public enum Energy {
-	ZERO(0),
-	LOW(1),
-	MEDIUM(2),
-	HIGH(3);
+	ZERO(1),
+	LOW(2),
+	MEDIUM(3),
+	HIGH(4);
 
 	private final int score;
 

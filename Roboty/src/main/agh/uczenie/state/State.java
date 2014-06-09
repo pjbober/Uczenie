@@ -55,7 +55,7 @@ public class State implements IState {
 	public int enemiesEnergyHash() {
 		int enemiesEnergyHash = 0;
 		for (Map.Entry<Distance, Energy> entry : enemiesEnergyAvg.entrySet()) {
-			enemiesEnergyHash += 10*entry.getKey().getNumber() + entry.getValue().getScore();
+			enemiesEnergyHash += entry.getKey().getNumber()*entry.getValue().getScore();
 		}
 		return enemiesEnergyHash;
 	}
@@ -65,7 +65,7 @@ public class State implements IState {
 	public int enemiesCountHash() {
 		int enemiesCountHash = 0;
 		for (Map.Entry<Distance, Integer> entry : enemiesCount.entrySet()) {
-			enemiesCountHash += 10*entry.getKey().getNumber() + entry.getValue();
+			enemiesCountHash += entry.getKey().getNumber()*entry.getValue();
 		}
 
 		return enemiesCountHash;

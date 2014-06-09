@@ -1,9 +1,9 @@
 package agh.uczenie.state;
 
 public enum Distance {
-	SHORT(0),
-	MEDIUM(1),
-	LONG(2);
+	SHORT(1),
+	MEDIUM(2),
+	LONG(3);
 
 	private final int number;
 
