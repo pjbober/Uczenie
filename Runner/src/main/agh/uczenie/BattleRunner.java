@@ -1,19 +1,27 @@
+package agh.uczenie;
+
 import robocode.control.*;
 import robocode.control.events.*;
 
 public class BattleRunner {
 
 	public static void main(String[] args) {
+		assert args.length > 0;
+
+		String robocodeDir = args[0];
+		int numberOfBattles = args.length > 1 ? Integer.parseInt(args[1]) : 1;
+		int numberOfRounds = args.length > 2 ? Integer.parseInt(args[2]) : 1;
+
+
 		RobocodeEngine.setLogMessagesEnabled(false);
 
-		RobocodeEngine engine = new RobocodeEngine(new java.io.File("/home/kliput/Programy/robocode"));
+		RobocodeEngine engine = new RobocodeEngine(new java.io.File(robocodeDir));
 
 		engine.addBattleListener(new BattleObserver());
 
 		// Show the Robocode battle view
 //		engine.setVisible(true);
 
-		int numberOfRounds = 10;
 		String enemiesList = "sample.Crazy";
 
 		String robotsList = "agh.uczenie.robot.PiqleStrategicRobot*," + enemiesList;
@@ -25,8 +33,7 @@ public class BattleRunner {
 
 		BattleSpecification battleSpec = new BattleSpecification(numberOfRounds, battlefield, selectedRobots);
 
-		for (int i=0; i<100; ++i) {
-			// Run our specified battle and let it run till it is over
+		for (int i=0; i<numberOfBattles; ++i) {
 			engine.runBattle(battleSpec, true); // waits till the battle finishes
 		}
 
