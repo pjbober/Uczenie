@@ -2,9 +2,9 @@ package agh.uczenie.robot;
 
 import agh.uczenie.strategy_select.RandomStrategySelect;
 
-public class RandomStrategyRobot extends AbstractStrategicRobot {
+public class RandomStrategicRobot extends AbstractStrategicRobot {
 
-	public RandomStrategyRobot() {
+	public RandomStrategicRobot() {
 		super(RandomStrategySelect.class);
 	}
 }
