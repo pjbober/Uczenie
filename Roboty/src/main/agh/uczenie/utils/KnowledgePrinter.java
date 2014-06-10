@@ -21,6 +21,5 @@ public class KnowledgePrinter {
 		}
 
 		System.out.println(piqleSelector.toString());
-		piqleSelector.showHistogram();
 	}
 }

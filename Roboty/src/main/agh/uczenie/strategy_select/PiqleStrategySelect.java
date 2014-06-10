@@ -17,6 +17,7 @@ import java.io.*;
 
 
 public class PiqleStrategySelect extends BaseStrategySelect {
+	private static double totalReinforcement = 0;
 
 	private static final String FILE_PATH = "piqle_memory.data";
 	QLearningSelector piqleSelector;
@@ -86,9 +87,10 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 	public void learnAndPushState(State state) {
 		double reinforcement = computeReinforcement(prevState, state);
 		resetReinforcementMemory();
+		totalReinforcement += reinforcement;
 
 		System.out.println(String.format("Learn: %s --[%s]--> %s (%f)",
-				prevState.toString(), stateTransitionAction, state.toString(), reinforcement));
+			prevState.toString(), stateTransitionAction, state.toString(), reinforcement));
 
 		piqleSelector.learn((IState) prevState, (IState) state, stateTransitionAction, reinforcement);
 
@@ -126,24 +128,24 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 
 	@Override
 	public void onBulletHit(BulletHitEvent bulletHitEvent) {
-		reinforcementMemory += bulletHitEvent.getBullet().getPower();
+//		reinforcementMemory += bulletHitEvent.getBullet().getPower();
 	}
 
 	@Override
 	public void onBulletMissed(BulletMissedEvent bulletMissedEvent) {
-		reinforcementMemory -= bulletMissedEvent.getBullet().getPower();
+//		reinforcementMemory -= bulletMissedEvent.getBullet().getPower();
 	}
 
 	@Override
 	public void onHitByBullet(HitByBulletEvent hitByBulletEvent) {
-		reinforcementMemory -= hitByBulletEvent.getBullet().getPower();
+//		reinforcementMemory -= hitByBulletEvent.getBullet().getPower();
 	}
 
 	@Override
 	public void onHitWall(HitWallEvent hitWallEvent) {
-		double penalty = (Math.abs(hitWallEvent.getBearing())/180)*10.0;
-		System.out.println("Penalty for hit wall: " + penalty);
-		reinforcementMemory -= (Math.abs(hitWallEvent.getBearing())/180)*10.0;
+//		double penalty = (Math.abs(hitWallEvent.getBearing())/180)*10.0;
+//		System.out.println("Penalty for hit wall: " + penalty);
+//		reinforcementMemory -= (Math.abs(hitWallEvent.getBearing())/180)*10.0;
 	}
 
 	@Override
@@ -151,6 +153,21 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 		super.onRoundEnded(roundEndedEvent);
 		try {
 			writeMemory();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void onBattleEnded(BattleEndedEvent battleEndedEvent) {
+		super.onBattleEnded(battleEndedEvent);
+		logToFile("piqle_rewards_log", Double.toString(totalReinforcement));
+		totalReinforcement = 0;
+	}
+
+	public static void logToFile(String fileName, String message) {
+		try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)))) {
+			out.println(message);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
