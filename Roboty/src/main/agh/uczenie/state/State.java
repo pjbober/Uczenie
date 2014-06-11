@@ -37,20 +37,6 @@ public class State implements IState {
 		return 0; // currently not needed
 	}
 
-	@Override
-	public int hashCode() {
-		switch (specialState) {
-			default:
-			case NORMAL:
-				// self energy is assumed to be 0-999
-				return selfEnergy.getScore() + 1000*enemiesCountHash() + 10000*enemiesEnergyHash();
-			case WIN:
-				return -1;
-			case LOSE:
-				return -2;
-		}
-	}
-
 	/// Values: [0,1,2,3]+[10,11,12,13]+[20,21,22,23] -> 0..39
 	public int enemiesEnergyHash() {
 		int enemiesEnergyHash = 0;
@@ -103,6 +89,30 @@ public class State implements IState {
 	}
 
 	@Override
+	public int hashCode() {
+		switch (specialState) {
+			default:
+			case NORMAL:
+				// self energy is assumed to be 0-999
+				return selfEnergy.getScore() + 1000*enemiesCountHash() + 10000*enemiesEnergyHash();
+			case WIN:
+				return -1;
+			case LOSE:
+				return -2;
+		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj.getClass().equals(State.class) && this.hashCode() == obj.hashCode();
+	}
+
+	@Override
+	public boolean isFinal() {
+		return specialState == SpecialState.WIN || specialState == SpecialState.LOSE;
+	}
+
+	@Override
 	public void setEnvironment(IEnvironment c) {
 		throw new RuntimeException();
 	}
@@ -120,11 +130,6 @@ public class State implements IState {
 	@Override
 	public double getReward(IState old, IAction a) {
 		throw new RuntimeException("Should be used only in agents");
-	}
-
-	@Override
-	public boolean isFinal() {
-		return false;
 	}
 
 	@Override
