@@ -6,7 +6,8 @@ public enum StrategyType {
 	DEFAULT,
 	BATTERING_RAM,
 	AVOIDING,
-	ANTI_GRAVITY;
+	ANTI_GRAVITY,
+	HEAD_ON_TARGETING;
 
 	private static final StrategyType[] _uniqueValues;
 	public static final int length;

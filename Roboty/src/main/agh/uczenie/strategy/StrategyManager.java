@@ -4,6 +4,7 @@ import agh.uczenie.robot.AbstractStrategicRobot;
 import agh.uczenie.strategy.strategies.atomic.AntiGravityStrategy;
 import agh.uczenie.strategy.strategies.atomic.AvoidingStrategy;
 import agh.uczenie.strategy.strategies.atomic.BatteringRamStrategy;
+import agh.uczenie.strategy.strategies.atomic.HeadOnTargetingStrategy;
 
 public class StrategyManager {
 	private static final StrategyType DEFAULT_TYPE = StrategyType.AVOIDING;
@@ -49,6 +50,9 @@ public class StrategyManager {
 				break;
 			case ANTI_GRAVITY:
 				strategy = new AntiGravityStrategy(robot);
+				break;
+			case HEAD_ON_TARGETING:
+				strategy = new HeadOnTargetingStrategy(robot);
 				break;
 			default:
 			case DEFAULT:
