@@ -94,9 +94,13 @@ public class BaseStrategy implements IBasicEvents, IBasicEvents2, IBasicEvents3 
 
 	// Utils
 
-	protected void calibrate() {
-		robot.turnGunRight(robot.getHeading()-robot.getGunHeading());
+	protected void calibrateRadarToGun() {
 		robot.turnRadarRight(robot.getGunHeading()-robot.getRadarHeading());
+	}
+
+	protected void calibrateAll() {
+		robot.turnGunRight(robot.getHeading()-robot.getGunHeading());
+		calibrateRadarToGun();
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class TestingStrategy extends BaseStrategy {
 	public void loopAction() {
 		super.loopAction();
 		if (!calibrated && probe++ > 50) {
-			calibrate();
+			calibrateAll();
 			calibrated = true;
 		}
 	}

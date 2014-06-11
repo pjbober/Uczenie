@@ -49,7 +49,7 @@ public class BatteringRamStrategy extends BaseStrategy {
 		robot.setAdjustGunForRobotTurn(false);
 		robot.setAdjustRadarForGunTurn(false);
 
-		calibrate();
+		calibrateAll();
 	}
 
 	@Override

@@ -23,6 +23,9 @@ public class HeadOnTargetingStrategy extends BaseStrategy {
 
 	@Override
 	public void setup() {
+		calibrateRadarToGun();
+		robot.setAdjustGunForRobotTurn(false);
+		robot.setAdjustRadarForGunTurn(false);
 		robot.setTurnGunRight(360);
 	}
 
