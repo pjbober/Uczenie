@@ -49,7 +49,7 @@ public class GFTargetingStrategy extends BaseStrategy {
 
 	@Override
 	public void loopAction() {
-		robot.turnRadarRightRadians(Double.POSITIVE_INFINITY);
+		robot.setTurnRadarRightRadians(Double.POSITIVE_INFINITY);
 	}
 
 	public void onScannedRobot(ScannedRobotEvent e) {
