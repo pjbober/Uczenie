@@ -12,6 +12,6 @@ public class DefaultStrategySelect extends BaseStrategySelect {
 
 	@Override
 	public BaseStrategy basedOnState(State state) {
-		return strategyManager.get(StrategyType.DEFAULT);
+		return strategyManager.get(StrategyType.ANTI_GRAVITY);
 	}
 }

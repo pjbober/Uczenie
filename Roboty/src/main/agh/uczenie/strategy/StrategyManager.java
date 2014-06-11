@@ -1,6 +1,7 @@
 package agh.uczenie.strategy;
 
 import agh.uczenie.robot.AbstractStrategicRobot;
+import agh.uczenie.strategy.strategies.atomic.AntiGravityStrategy;
 import agh.uczenie.strategy.strategies.atomic.AvoidingStrategy;
 import agh.uczenie.strategy.strategies.atomic.BatteringRamStrategy;
 
@@ -45,6 +46,9 @@ public class StrategyManager {
 				break;
 			case AVOIDING:
 				strategy = new AvoidingStrategy(robot);
+				break;
+			case ANTI_GRAVITY:
+				strategy = new AntiGravityStrategy(robot);
 				break;
 			default:
 			case DEFAULT:

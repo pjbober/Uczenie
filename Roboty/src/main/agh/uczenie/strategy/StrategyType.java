@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum StrategyType {
 	DEFAULT,
 	BATTERING_RAM,
-	AVOIDING;
+	AVOIDING,
+	ANTI_GRAVITY;
 
 	private static final StrategyType[] _uniqueValues;
 	public static final int length;
