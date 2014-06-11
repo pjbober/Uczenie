@@ -12,6 +12,6 @@ public class DefaultStrategySelect extends BaseStrategySelect {
 
 	@Override
 	public BaseStrategy basedOnState(State state) {
-		return strategyManager.get(StrategyType.HEAD_ON_TARGETING);
+		return strategyManager.get(StrategyType.GF_TARGETING);
 	}
 }

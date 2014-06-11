@@ -7,7 +7,8 @@ public enum StrategyType {
 	BATTERING_RAM,
 	AVOIDING,
 	ANTI_GRAVITY,
-	HEAD_ON_TARGETING;
+	HEAD_ON_TARGETING,
+	GF_TARGETING;
 
 	private static final StrategyType[] _uniqueValues;
 	public static final int length;

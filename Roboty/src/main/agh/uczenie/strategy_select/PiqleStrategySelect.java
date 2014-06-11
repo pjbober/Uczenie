@@ -108,7 +108,7 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 		logDebug(String.format("Reinforcement: M: %.2f, E: %.2f, S: %.2f",
 				reinforcementMemory, energyReinforcement, stateReinforcement));
 
-		return reinforcementMemory + energyReinforcement + stateReinforcement;
+		return reinforcementMemory*100 + energyReinforcement*100 + stateReinforcement;
 	}
 
 	private double energyReinforcement() {
@@ -150,11 +150,17 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 	}
 
 	@Override
-	public void onHitWall(HitWallEvent hitWallEvent) {
-		double penalty = (Math.abs(hitWallEvent.getBearing())/180)*10.0;
-		logDebug("Penalty for hit wall: " + penalty);
-		reinforcementMemory -= (Math.abs(hitWallEvent.getBearing())/180)*10.0;
+	public void onHitRobot(HitRobotEvent hitRobotEvent) {
+		double bearing = hitRobotEvent.getBearing();
+		reinforcementMemory += (bearing > -20 && bearing < 20) ? 20-Math.abs(bearing) : 0;
 	}
+
+	//	@Override
+//	public void onHitWall(HitWallEvent hitWallEvent) {
+//		double penalty = (Math.abs(hitWallEvent.getBearing())/180)*10.0;
+//		logDebug("Penalty for hit wall: " + penalty);
+//		reinforcementMemory -= (Math.abs(hitWallEvent.getBearing())/180)*10.0;
+//	}
 
 	@Override
 	public void onRoundEnded(RoundEndedEvent roundEndedEvent) {

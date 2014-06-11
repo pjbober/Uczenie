@@ -14,7 +14,6 @@ import java.util.Random;
 public class HeadOnTargetingStrategy extends BaseStrategy {
 
 	private double lastTurnGunRadiansDiff = 0;
-	private int aimed = 0;
 	Random random = new Random();
 
 	public HeadOnTargetingStrategy(AdvancedRobot robot) {
