@@ -11,6 +11,11 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
+/**
+ * Based on GFTargetingBot by PEZ (Public Domain)
+ * http://robowiki.net/wiki/GFTargetingBot
+ */
+
 public class GFTargetingStrategy extends BaseStrategy {
 	private static final double BULLET_POWER = 1.9;
 

@@ -7,6 +7,12 @@ import robocode.util.Utils;
 
 import java.awt.*;
 
+/**
+ * Based on DustBunny v. 3.8 by Michael Dorgan
+ * Unknown open-source license, probably Public Domain
+ * http://robowiki.net/wiki/DustBunny
+ */
+
 public class AntiGravityStrategy extends BaseStrategy
 {
 //	static final double GUN_FACTOR = 30;
