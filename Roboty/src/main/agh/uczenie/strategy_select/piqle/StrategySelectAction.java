@@ -31,6 +31,11 @@ public class StrategySelectAction implements IAction {
 		return type.hashCode();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return obj.getClass().equals(StrategySelectAction.class) && this.hashCode() == obj.hashCode();
+	}
+
 	public StrategyType getStrategyType() {
 		return type;
 	}
