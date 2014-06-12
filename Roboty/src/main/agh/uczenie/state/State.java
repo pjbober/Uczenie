@@ -32,11 +32,6 @@ public class State implements IState {
 		init();
 	}
 
-	public double computeScoreTo(State currentState) {
-//		return currentState.selfEnergy.getScore() - selfEnergy.getScore();
-		return 0; // currently not needed
-	}
-
 	/// Values: [0,1,2,3]+[10,11,12,13]+[20,21,22,23] -> 0..39
 	public int enemiesEnergyHash() {
 		int enemiesEnergyHash = 0;

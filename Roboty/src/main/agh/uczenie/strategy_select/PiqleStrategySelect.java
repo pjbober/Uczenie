@@ -103,12 +103,11 @@ public class PiqleStrategySelect extends BaseStrategySelect {
 
 	private double computeReinforcement(State prevState, State currentState) {
 		double energyReinforcement = energyReinforcement();
-		double stateReinforcement = prevState.computeScoreTo(currentState);
 
-		logDebug(String.format("Reinforcement: M: %.2f, E: %.2f, S: %.2f",
-				reinforcementMemory, energyReinforcement, stateReinforcement));
+		logDebug(String.format("Reinforcement: M: %.2f, E: %.2f",
+				reinforcementMemory, energyReinforcement));
 
-		return reinforcementMemory*100 + energyReinforcement*100 + stateReinforcement;
+		return reinforcementMemory*100 + energyReinforcement*100;
 	}
 
 	private double energyReinforcement() {
